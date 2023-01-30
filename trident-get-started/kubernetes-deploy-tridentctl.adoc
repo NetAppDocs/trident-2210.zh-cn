@@ -1,0 +1,146 @@
+---
+sidebar: sidebar 
+permalink: trident-get-started/kubernetes-deploy-tridentctl.html 
+keywords: deploy, astra trident, methods, tridentctl, windows 
+summary: '您可以使用部署Astra Trident `tridentctl`。' 
+---
+= 使用 tridentctl 进行部署
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+您可以使用部署Astra Trident `tridentctl`。最好熟悉一下 link:../trident-concepts/intro.html["基本概念"]。以自定义 `tridentctl` 部署、请参见 link:kubernetes-customize-deploy-tridentctl.html["自定义 tridentctl 部署"]。
+
+
+
+== 有关Astra Trident 22.10的关键信息
+
+*在升级到Astra Trident 22.10之前、您必须阅读以下关键信息。*
+
+[WARNING]
+.<Strong>有关Astra Trident 22.10的关键信息</Strong>
+====
+* 现在、Trident支持Kubernetes 1.25。在升级到Kubernetes 1.25之前、您必须先升级到Astra Trident 22.10。
+* Astra Trident现在严格强制在SAN环境中使用多路径配置、建议值为 `find_multipaths: no` 在multipath.conf文件中。
++
+使用非多路径配置或 `find_multipaths: yes` 或 `find_multipaths: smart` multipath.conf文件中的值将导致挂载失败。Trident已建议使用 `find_multipaths: no` 自21.07版起。
+
+
+
+====
+
+
+== 验证前提条件
+
+要部署 Astra Trident ，应满足以下前提条件：
+
+* 对受支持的Kubernetes集群具有完全权限。
+* 访问受支持的NetApp存储系统。
+* 能够从所有Kubernetes工作节点挂载卷。
+* 具有的Linux主机 `kubectl` (或 `oc`(如果您使用的是OpenShift)已安装并配置为管理要使用的Kubernetes集群。
+* 。 `KUBECONFIG` 环境变量指向您的Kubernetes集群配置。
+* 。 link:requirements.html["Astra Trident 所需的功能门"] 已启用。
+* 如果您将 Kubernetes 与 Docker Enterprise 结合使用， https://docs.docker.com/ee/ucp/user-access/cli/["按照其步骤启用 CLI 访问"^]。
+
+
+
+
+== 第 1 步：确定 Kubernetes 集群的资格
+
+登录到Linux主机并验证它是否正在管理一个正常运行的、 link:requirements.html["支持的 Kubernetes 集群"^] 您拥有必要的特权。
+
+
+NOTE: 您可以使用OpenShift `oc` 而不是 `kubectl` 在下面的所有示例中、您应先以*系统：admin*身份运行登录 `oc login -u system:admin` 或 `oc login -u kube-admin`。
+
+要检查 Kubernetes 版本，请运行以下命令：
+
+[listing]
+----
+kubectl version
+----
+要验证Kubernetes集群管理员权限、请运行以下命令：
+
+[listing]
+----
+kubectl auth can-i '*' '*' --all-namespaces
+----
+要验证是否可以从 Docker Hub 启动使用映像的 POD 并通过 Pod 网络访问存储系统，请运行以下命令：
+
+[listing]
+----
+kubectl run -i --tty ping --image=busybox --restart=Never --rm -- \
+  ping <management IP>
+----
+确定 Kubernetes 服务器版本。您将在安装 Astra Trident 时使用它。
+
+
+
+== 第 2 步：下载并提取安装程序
+
+
+NOTE: Trident 安装程序将创建 Trident Pod ，配置用于保持其状态的 CRD 对象，并初始化执行配置卷和将卷附加到集群主机等操作的 CSI sidecars 。
+
+您可以从下载并提取最新版本的Trident安装程序包 link:https://github.com/NetApp/trident/releases/latest["GitHub上的_assets_部分"^]。
+
+例如、如果最新版本为22.10.0：
+
+[listing]
+----
+wget https://github.com/NetApp/trident/releases/download/v22.10.0/trident-installer-22.10.0.tar.gz
+tar -xf trident-installer-22.10.0.tar.gz
+cd trident-installer
+----
+
+
+== 第 3 步：安装 Astra Trident
+
+通过执行在所需命名空间中安装Astra Trident `tridentctl install` 命令：
+
+[listing]
+----
+./tridentctl install -n trident
+....
+INFO Starting Trident installation.                namespace=trident
+INFO Created service account.
+INFO Created cluster role.
+INFO Created cluster role binding.
+INFO Added finalizers to custom resource definitions.
+INFO Created Trident service.
+INFO Created Trident secret.
+INFO Created Trident deployment.
+INFO Created Trident daemonset.
+INFO Waiting for Trident pod to start.
+INFO Trident pod started.                          namespace=trident pod=trident-csi-679648bd45-cv2mx
+INFO Waiting for Trident REST interface.
+INFO Trident REST interface is up.                 version=22.10.0
+INFO Trident installation succeeded.
+....
+----
+
+NOTE: 要使Astra Trident能够在Windows节点上运行、请添加 `--windows` 安装命令的标志： `$ ./tridentctl install --windows -n trident`。
+
+安装程序完成后、将显示类似于以下内容的输出。根据Kubernetes集群中的节点数、可能存在更多的Pod：
+
+[listing]
+----
+kubectl get pod -n trident
+NAME                           READY   STATUS    RESTARTS   AGE
+trident-csi-679648bd45-cv2mx   4/4     Running   0          5m29s
+trident-csi-vgc8n              2/2     Running   0          5m29s
+
+./tridentctl -n trident version
++----------------+----------------+
+| SERVER VERSION | CLIENT VERSION |
++----------------+----------------+
+| 22.10.0        | 22.10.0        |
++----------------+----------------+
+----
+要完成Astra Trident配置、请继续 link:kubernetes-postdeployment.html["部署后任务"]。
+
+如果安装程序未成功完成或 `trident-csi-<generated id>` 未处于*正在运行*状态、未安装平台。
+
+
+NOTE: 有关部署期间的故障排除问题、请参见 link:../troubleshooting.html["故障排除"]。

@@ -1,0 +1,161 @@
+---
+sidebar: sidebar 
+permalink: trident-use/worker-node-prep.html 
+keywords: storage class, manage storage class, storage classes, kubernetes storage classes, worker node, nfs, iscsi, kubernetes clusters 
+summary: Kubernetes 集群中的所有工作节点都需要能够挂载为 Pod 配置的卷。如果您在其中一个后端使用的是 ontap-nas ， ontap-nas-economy. ontap-nas-flexgroup 驱动程序，则您的工作节点需要 NFS 工具。否则，它们需要使用 iSCSI 工具。 
+---
+= 准备工作节点
+:hardbreaks:
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+Kubernetes 集群中的所有工作节点都需要能够挂载为 Pod 配置的卷。如果您使用的是 `ontap-nas`， `ontap-nas-economy`或 `ontap-nas-flexgroup` 驱动程序对于您的一个后端、您的工作节点需要NFS工具。否则，它们需要使用 iSCSI 工具。
+
+默认情况下，最新版本的 RedHat CoreOS 同时安装了 NFS 和 iSCSI 。
+
+
+WARNING: 安装 NFS 或 iSCSI 工具后，您应始终重新启动工作节点，否则将卷连接到容器可能会失败。
+
+
+
+== 节点服务发现
+
+从22.07开始、Astra Trident会尝试自动检测节点是否能够运行iSCSI或NFS服务。Astra Trident会为节点创建事件以标识发现的服务。您可以使用命令查看这些事件：
+
+[listing]
+----
+kubectl get event -A --field-selector involvedObject.name=<Kubernetes node name>
+----
+Trident还标识为Trident节点CR上的每个节点启用的服务。要查看发现的服务、请使用命令：
+
+[listing]
+----
+tridentctl get node -o wide -n <Trident namespace>
+----
+
+NOTE: 节点服务发现可识别已发现的服务、但无法保证服务已正确配置。相反、如果没有发现的服务、则无法保证卷挂载将失败。
+
+
+
+== NFS volumes
+
+[cols="3*"]
+|===
+| 协议 | 操作系统 | 命令 
+
+
+| NFS  a| 
+RHEL/CentOS 7.
+ a| 
+`sudo yum install -y nfs-utils`
+
+
+
+| NFS  a| 
+Ubuntu
+ a| 
+`sudo apt-get install -y nfs-common`
+
+|===
+
+NOTE: 您应确保 NFS 服务在启动期间启动。
+
+
+
+== iSCSI 卷
+
+使用 iSCSI 卷时，请考虑以下事项：
+
+* Kubernetes 集群中的每个节点都必须具有唯一的 IQN 。* 这是必要的前提条件 * 。
+* 如果使用RHCOS 4.5或更高版本或其他与RHEL兼容的Linux分发版、请与结合使用 `solidfire-san` 驱动程序和Element OS 12：5或更早版本、请确保中的CHAP身份验证算法设置为MD5 `/etc/iscsi/iscsid.conf`。Element 12.7提供了符合FIPS的安全CHAP算法SHA1、SHA-256和SHA3-256。
++
+[listing]
+----
+sudo sed -i 's/^\(node.session.auth.chap_algs\).*/\1 = MD5/' /etc/iscsi/iscsid.conf
+----
+* 在使用运行RHEL/RedHat CoreOS和iSCSI PV的工作节点时、请务必指定 `discard` StorageClass中的mountOption、用于执行实时空间回收。请参见 https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/8/html/managing_file_systems/discarding-unused-blocks_managing-file-systems["RedHat 的文档"^]。
+
+
+[cols="3*"]
+|===
+| 协议 | 操作系统 | 命令 
+
+
+| iSCSI  a| 
+RHEL/CentOS
+ a| 
+. 安装以下系统软件包：
++
+`sudo yum install -y lsscsi iscsi-initiator-utils sg3_utils device-mapper-multipath`
+
+. 检查 iscsi-initiator-utils 版本是否为 6.2.0.877-2.el7 或更高版本：
++
+`rpm -q iscsi-initiator-utils`
+
+. 将扫描设置为手动：
++
+`sudo sed -i 's/^\(node.session.scan\).*/\1 = manual/' /etc/iscsi/iscsid.conf`
+
+. 启用多路径：
++
+`sudo mpathconf --enable --with_multipathd y --find_multipaths n`
+
++
+
+NOTE: 确保 `etc/multipath.conf` 包含 `find_multipaths no` 下 `defaults`。
+
+. 请确保 `iscsid` 和 `multipathd` 正在运行：
++
+`sudo systemctl enable --now iscsid multipathd`
+
+. 启用并启动 `iscsi`：
++
+`sudo systemctl enable --now iscsi`
+
+
+
+
+
+| iSCSI  a| 
+Ubuntu
+ a| 
+. 安装以下系统软件包：
++
+`sudo apt-get install -y open-iscsi lsscsi sg3-utils multipath-tools scsitools`
+
+. 检查 open-iscsi 版本是否为 2.0.877-5ubuntu2.10 或更高版本（对于双子系统）或 2.0.877-7.1ubuntu6.1 或更高版本（对于 Focal ）：
++
+`dpkg -l open-iscsi`
+
+. 将扫描设置为手动：
++
+`sudo sed -i 's/^\(node.session.scan\).*/\1 = manual/' /etc/iscsi/iscsid.conf`
+
+. 启用多路径：
++
+`sudo tee /etc/multipath.conf <<-'EOF'
+defaults {
+    user_friendly_names yes
+    find_multipaths no
+}
+EOF
+sudo systemctl enable --now multipath-tools.service
+sudo service multipath-tools restart`
+
++
+
+NOTE: 确保 `etc/multipath.conf` 包含 `find_multipaths no` 下 `defaults`。
+
+. 请确保 `open-iscsi` 和 `multipath-tools` 已启用且正在运行：
++
+`sudo systemctl status multipath-tools`
+`sudo systemctl enable --now open-iscsi.service`
+`sudo systemctl status open-iscsi`
+
+
+
+|===
+
+NOTE: 对于Ubuntu 18.04、您必须使用发现目标端口 `iscsiadm` 启动前 `open-iscsi` 以启动iSCSI守护进程。您也可以修改 `iscsi` 要启动的服务 `iscsid` 自动。
