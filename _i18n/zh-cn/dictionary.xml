@@ -730,14 +730,6 @@
   <block id="ee50d481128d1543f9945b4a4f3fbe9d" category="paragraph">对于带气的安装，下面列出了安装 Astra Trident 所需的容器映像。使用<block ref="4ebf280824868255c952dc529072ecb9" prefix=" " category="inline-code"></block> 用于验证所需容器映像列表的命令。</block>
   <block id="aa92c4c233bc01609d957e469736b699" category="cell">容器映像</block>
   <block id="4b977ef7367155e20f954fe7b0a00c4f" category="cell">v1.20.0</block>
-  <block id="0da21d7acd742e8c3833231cf3efcc96" category="list-text">NetApp/Trident：22.10.0</block>
-  <block id="5a4f48c8cc996f58dfb69f6cb6322641" category="list-text">netapp/trident autosupport：22.10</block>
-  <block id="205eb4d1f3dd4b4a46f8ebda17a6987a" category="list-text">K8s.IO/SIG-storage/CsI-provisioner：v3.3.0</block>
-  <block id="5a072765b8872c7a5b301bf26a7bcf6f" category="list-text">K8s.IO/SIG-storage/CSI-attacher：v4.0.0</block>
-  <block id="5f4c44794a240124005ae51a462206a1" category="list-text">K8s.IO/SIG-storage/CSI-resizer：v1.0.0</block>
-  <block id="a33ee60bce887d9934eaa4c257ba369e" category="list-text">K8s.IO/SIG-storage/CSI-snapshotter：v3.0.3</block>
-  <block id="b5df2cef5efcb0eb27dd766a59e4b345" category="list-text">K8s.IO/SIG-storage/CsI-node-driver-registry:v2.5.1</block>
-  <block id="943da146fd38a6a4ba903d9f8e884b91" category="list-text">netapp/trident操作符：22.10.0 (可选)</block>
   <block id="6f0b081bef5e745ef2429ef74472d9bd" category="cell">v1.21.0</block>
   <block id="681d715b456f6d29a501b8f132e941a1" category="cell">v1.22.0</block>
   <block id="73e93ad328287e5ce4c06228cfdba2bf" category="cell">v1.23.0</block>
@@ -3465,4 +3457,12 @@
   <block id="74e5369c29dfffd1c167b754a55ac30d" category="sidebar">ANF配置选项和示例</block>
   <block id="ee7bdcae9fbde9976cf62161a22434cf" category="sidebar">准备使用ONTAP NAS驱动程序配置后端</block>
   <block id="f18a50f02f48551895d57b81dd288142" category="sidebar">在命名空间之间共享NFS卷</block>
+  <block id="32b940ac399808955a03541b4251cb7d" category="list-text">dDocker。io/NetApp/trident：22.10.0</block>
+  <block id="e97dab2221ac1664a5abe28054f6f063" category="list-text">docer.io/NetApp/trident-autostsupport：22.10</block>
+  <block id="74d7347d2d8b4324553eb6d881988fbd" category="list-text">注册表.k8s.io/sig-storage/CsI-置 配置程序：v3.3.0</block>
+  <block id="e42bb43c53b774cb18202277627ded6a" category="list-text">注册表.k8s.io/sig-storage/CsI-attacher：v4.0.0</block>
+  <block id="b21bbc0cbede5460307bb0a474f8606c" category="list-text">注册表.k8s.io/sig-storage/CsI-s不同：v1.6.0</block>
+  <block id="63ecb6130cad9815e1932d6c6dd2fd48" category="list-text">注册表.k8s.io/sig-storage/CsI-snapshotter：v3.0.3.</block>
+  <block id="730890f7a33619a5f272f2ed9a434ed0" category="list-text">注册表.k8s.io/sig-storage/CsI-N节点 驱动程序注册器：v2.5.1</block>
+  <block id="4dfe67785205ed3d7f2cb3ca8eafaa68" category="list-text">dkoper.io/NetApp/trident-operator：22.10.0 (可选)</block>
 </blocks>
