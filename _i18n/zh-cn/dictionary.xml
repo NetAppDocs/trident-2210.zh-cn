@@ -3452,7 +3452,6 @@
   <block id="74d7347d2d8b4324553eb6d881988fbd" category="list-text">注册表.k8s.io/sig-storage/CsI-置 配置程序：v3.3.0</block>
   <block id="e42bb43c53b774cb18202277627ded6a" category="list-text">注册表.k8s.io/sig-storage/CsI-attacher：v4.0.0</block>
   <block id="b21bbc0cbede5460307bb0a474f8606c" category="list-text">注册表.k8s.io/sig-storage/CsI-s不同：v1.6.0</block>
-  <block id="63ecb6130cad9815e1932d6c6dd2fd48" category="list-text">注册表.k8s.io/sig-storage/CsI-snapshotter：v3.0.3.</block>
   <block id="730890f7a33619a5f272f2ed9a434ed0" category="list-text">注册表.k8s.io/sig-storage/CsI-N节点 驱动程序注册器：v2.5.1</block>
   <block id="4dfe67785205ed3d7f2cb3ca8eafaa68" category="list-text">dkoper.io/NetApp/trident-operator：22.10.0 (可选)</block>
   <block id="52009bb7ee17227f566cd26a02caee56" category="inline-link-macro"><block ref="52009bb7ee17227f566cd26a02caee56" category="inline-link-rx"></block></block>
@@ -3468,4 +3467,5 @@
   <block id="1dedbfd605df8b562acc8f759a8e9acc" category="list-text">运行的Kubernetes集群 <block ref="229e1052bb9ecd8cf2680d6f44691174" category="inline-link-macro-rx"></block></block>
   <block id="daeed8b959c87c723c9a96bfb5a96851" category="list-text">使用 Trident 时可能会遇到的一个常见问题<block ref="24a785881ff1cdf191a2239811dc9597" category="inline-link-rx"></block> 租户和客户端密码来自权限不足的应用程序注册。有关 Trident 要求的完整列表，请参见 <block ref="e08bee233140d24c18d95885ad07d2bb" category="inline-link-macro-rx"></block> Configuration</block>
   <block id="3e9e53a916f99df7d6286c52e3b7a9d5" category="paragraph">默认情况下， Astra Trident 不会使用 Kubernetes 将挂载选项设置为任何值。要在 Kubernetes 存储类中指定挂载选项，请按照给定示例进行操作<block ref="fe27d7e6fa26e46ae96377664e7dbdff" category="inline-link-rx"></block>。</block>
+  <block id="c60d7bfd38dc514d4e2eaa66c5a0a5fd" category="list-text">注册表.k8s.io/sig-storage/CsI-snapshotter：v6.1.0</block>
 </blocks>

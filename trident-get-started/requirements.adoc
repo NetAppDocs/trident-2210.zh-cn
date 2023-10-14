@@ -188,7 +188,7 @@ Astra Trident 可能需要先对存储系统进行一些更改，然后后端配
 * 注册表.k8s.io/sig-storage/CsI-置 配置程序：v3.3.0
 * 注册表.k8s.io/sig-storage/CsI-attacher：v4.0.0
 * 注册表.k8s.io/sig-storage/CsI-s不同：v1.6.0
-* 注册表.k8s.io/sig-storage/CsI-snapshotter：v3.0.3.
+* 注册表.k8s.io/sig-storage/CsI-snapshotter：v6.1.0
 * 注册表.k8s.io/sig-storage/CsI-N节点 驱动程序注册器：v2.5.1
 * dkoper.io/NetApp/trident-operator：22.10.0 (可选)
 
@@ -201,7 +201,7 @@ Astra Trident 可能需要先对存储系统进行一些更改，然后后端配
 * 注册表.k8s.io/sig-storage/CsI-置 配置程序：v3.3.0
 * 注册表.k8s.io/sig-storage/CsI-attacher：v4.0.0
 * 注册表.k8s.io/sig-storage/CsI-s不同：v1.6.0
-* 注册表.k8s.io/sig-storage/CsI-snapshotter：v3.0.3.
+* 注册表.k8s.io/sig-storage/CsI-snapshotter：v6.1.0
 * 注册表.k8s.io/sig-storage/CsI-N节点 驱动程序注册器：v2.5.1
 * dkoper.io/NetApp/trident-operator：22.10.0 (可选)
 
@@ -214,7 +214,7 @@ Astra Trident 可能需要先对存储系统进行一些更改，然后后端配
 * 注册表.k8s.io/sig-storage/CsI-置 配置程序：v3.3.0
 * 注册表.k8s.io/sig-storage/CsI-attacher：v4.0.0
 * 注册表.k8s.io/sig-storage/CsI-s不同：v1.6.0
-* 注册表.k8s.io/sig-storage/CsI-snapshotter：v3.0.3.
+* 注册表.k8s.io/sig-storage/CsI-snapshotter：v6.1.0
 * 注册表.k8s.io/sig-storage/CsI-N节点 驱动程序注册器：v2.5.1
 * dkoper.io/NetApp/trident-operator：22.10.0 (可选)
 
@@ -227,7 +227,7 @@ Astra Trident 可能需要先对存储系统进行一些更改，然后后端配
 * 注册表.k8s.io/sig-storage/CsI-置 配置程序：v3.3.0
 * 注册表.k8s.io/sig-storage/CsI-attacher：v4.0.0
 * 注册表.k8s.io/sig-storage/CsI-s不同：v1.6.0
-* 注册表.k8s.io/sig-storage/CsI-snapshotter：v3.0.3.
+* 注册表.k8s.io/sig-storage/CsI-snapshotter：v6.1.0
 * 注册表.k8s.io/sig-storage/CsI-N节点 驱动程序注册器：v2.5.1
 * dkoper.io/NetApp/trident-operator：22.10.0 (可选)
 
@@ -240,7 +240,7 @@ Astra Trident 可能需要先对存储系统进行一些更改，然后后端配
 * 注册表.k8s.io/sig-storage/CsI-置 配置程序：v3.3.0
 * 注册表.k8s.io/sig-storage/CsI-attacher：v4.0.0
 * 注册表.k8s.io/sig-storage/CsI-s不同：v1.6.0
-* 注册表.k8s.io/sig-storage/CsI-snapshotter：v3.0.3.
+* 注册表.k8s.io/sig-storage/CsI-snapshotter：v6.1.0
 * 注册表.k8s.io/sig-storage/CsI-N节点 驱动程序注册器：v2.5.1
 * dkoper.io/NetApp/trident-operator：22.10.0 (可选)
 
@@ -253,7 +253,7 @@ Astra Trident 可能需要先对存储系统进行一些更改，然后后端配
 * 注册表.k8s.io/sig-storage/CsI-置 配置程序：v3.3.0
 * 注册表.k8s.io/sig-storage/CsI-attacher：v4.0.0
 * 注册表.k8s.io/sig-storage/CsI-s不同：v1.6.0
-* 注册表.k8s.io/sig-storage/CsI-snapshotter：v3.0.3.
+* 注册表.k8s.io/sig-storage/CsI-snapshotter：v6.1.0
 * 注册表.k8s.io/sig-storage/CsI-N节点 驱动程序注册器：v2.5.1
 * dkoper.io/NetApp/trident-operator：22.10.0 (可选)
 
